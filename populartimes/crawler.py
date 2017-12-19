@@ -110,14 +110,27 @@ def get_detail(place_id):
 
     popularity, rating, rating_n = get_populartimes(searchterm)
 
-    detail_json = {
-        "id": detail["place_id"],
-        "name": detail["name"],
-        "address": detail["formatted_address"],
-        "searchterm": searchterm,
-        "types": detail["types"],
-        "coordinates": detail["geometry"]["location"],
-    }
+    if("opening_hours" in detail):
+        detail_json = {
+            "id": detail["place_id"],
+            "name": detail["name"],
+            "address": detail["formatted_address"],
+            "searchterm": searchterm,
+            "types": detail["types"],
+            "hours": detail["opening_hours"],
+            "coordinates": detail["geometry"]["location"],
+        }
+    else:
+        detail_json = {
+            "id": detail["place_id"],
+            "name": detail["name"],
+            "address": detail["formatted_address"],
+            "searchterm": searchterm,
+            "types": detail["types"],
+            "hours": {'periods': 'unavailable'}, # when Google doesn't have hours
+            "coordinates": detail["geometry"]["location"],
+        }
+
 
     # check optional return parameters
     if rating is not None:

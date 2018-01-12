@@ -1,14 +1,19 @@
 import populartimes
 
 yourapikey = 'AIzaSyDphmhbitcDQZYu5BG3_uEiKHWOKcsAtLY'
-yourapikey2 = ' AIzaSyAJXHl_sPypFNdtsiOWgVqMLICyzL-NcX4 '
+yourapikey2 = 'AIzaSyAJXHl_sPypFNdtsiOWgVqMLICyzL-NcX4'
 
-#germanbars = populartimes.get(yourapikey2, ["bar"], (48.132986, 11.566126), (48.142199, 11.580047))
-rogers = populartimes.get(yourapikey2, ["bar"], (42.0033745,-87.6797645), (42.019816,-87.660634))
-len(rogers)
-print(rogers)
 
-fnew = open('rogers-bars.txt', 'w')
-for item in rogers:
-    fnew.write("%s\n" % item)
-fnew.close()
+def poptester(locname, key, type, lower, upper):
+    loc = populartimes.get(key, type, lower, upper)
+    print('There are '+str(len(loc))+' items from your request\n')
+    print('Result below:\n')
+    print(loc)
+    with open(locname + '.txt', 'w') as fnew:
+        for item in loc:
+            fnew.write('%s\n' % item)
+
+
+poptester("rogersbar", yourapikey, ['bar'], (42.0033745,-87.6797645), (42.019816,-87.660634))
+poptester("rogersall", yourapikey, [''], (42.0033745,-87.6797645), (42.019816,-87.660634))
+#poptester("germanbars", yourapikey, [], (42.0033745,-87.6797645), (42.019816,-87.660634))
